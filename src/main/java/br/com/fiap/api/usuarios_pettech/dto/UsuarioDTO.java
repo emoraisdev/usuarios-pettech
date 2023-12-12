@@ -1,11 +1,13 @@
 package br.com.fiap.api.usuarios_pettech.dto;
 
+import br.com.fiap.api.usuarios_pettech.service.validation.CriacaoUsuarioValid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDate;
 
+@CriacaoUsuarioValid(message = "Já existe um usuário com o e-mail informado.")
 public record UsuarioDTO(Long id,
 
                          @NotBlank(message = "O nome não pode estar vazio.")

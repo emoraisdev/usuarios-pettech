@@ -37,10 +37,18 @@ public class ControllerExceptionHandler {
         validateError.setMessage("Houveram erros, verifique os detalhes.");
         validateError.setPath(request.getRequestURI());
 
-        erro.getBindingResult().getFieldErrors().forEach( f -> {
+        if (!erro.getBindingResult().getFieldErrors().isEmpty()) {
+            erro.getBindingResult().getFieldErrors().forEach(f -> {
 
-            validateError.addMensagem(f.getField(), f.getDefaultMessage());
-        });
+                validateError.addMensagem(f.getField(), f.getDefaultMessage());
+            });
+        } else {
+
+            erro.getBindingResult().getAllErrors().forEach(f -> {
+
+                validateError.addMensagem("", f.getDefaultMessage());
+            });
+        }
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).body(validateError);
     }
